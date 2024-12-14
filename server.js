@@ -9,6 +9,7 @@ const passUserToView = require("./middleware/pass-user-to-view.js");
 const mongoose = require("mongoose");
 const methodOverride = require("method-override");
 const morgan = require("morgan");
+const router = require("express").Router()
 
 
 // Port Configurations
@@ -35,11 +36,17 @@ app.use(passUserToView);
 
 
 
-// rEQUIRE Controllers
-const authController = require("./controllers/auth.js");
+// Require Controllers
+const authCtrl = require("./controllers/auth.js");
+const recipesCtrl = require('./controllers/recipes.js');
+const ingredientsCtrl = require('./controllers/ingredients.js');
 
 // Use Controller
-app.use("/auth", authController);
+app.use("/auth", authCtrl);
+app.use("/recipes", recipesCtrl);
+app.use("/ingredients", ingredientsCtrl);
+
+
 
 // Root Route
 app.get("/", async (req, res) => {
@@ -47,11 +54,6 @@ app.get("/", async (req, res) => {
 });
 
 
-// Route for testing
-// VIP-lounge
-app.get("/vip-lounge", isSignedIn, (req, res) => {
-    res.send(`Welcome to the party ${req.session.user.username}.`);
-});
 
 // Listen for the HTTP requests
 app.listen(port, () => {
