@@ -43,7 +43,7 @@ const ingredientsCtrl = require('./controllers/ingredients.js');
 
 // Use Controller
 app.use("/auth", authCtrl);
-app.use("/recipes", recipesCtrl);
+app.use("/recipes",isSignedIn,passUserToView, recipesCtrl);
 app.use("/ingredients", ingredientsCtrl);
 
 

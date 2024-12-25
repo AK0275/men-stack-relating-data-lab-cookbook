@@ -3,19 +3,22 @@ const router = express.Router()
 const Ingredient = require("../models/ingredient")
 const Recipe = require("../models/recipe")
 const isSignedIn = require("../middleware/is-signed-in")
+const passUserToView = require("../middleware/pass-user-to-view")
 
 router.get("/", isSignedIn, async (req, res) => {
     const recipe = await Recipe.find({ owner: req.session.user._id}).populate("ingredients")
     res.render("recipes/index.ejs", {recipe})
 })
 
-router.get("/new", isSignedIn, async (req, res) => {
+router.get("/new", isSignedIn, passUserToView, async (req, res) => {
     const ingredient = await Ingredient.find()
     res.render("recipes/new.ejs", {ingredient})
 })
 
-router.post("/", isSignedIn, async (req, res) => {
-    const newRecipe = new Recipe({...recipeData, ingredient: ingredientsArray, owner: req.session._id})
+router.post("/", isSignedIn, passUserToView, async (req, res) => {
+    const {ingredientsArray, ...recipeData} = req.body  
+    const newRecipe = new Recipe({...recipeData, ingredient: ingredientsArray, owner: req.session.user._id})
+    console.log("The current user is: ",req.session.user._id)
     await newRecipe.save()
     res.redirect("/recipes")
 })

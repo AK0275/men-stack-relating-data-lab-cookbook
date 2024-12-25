@@ -10,7 +10,7 @@
     <%- include('../partials/_navbar') %>
     <h1>All Ingredients</h1>
     <div class="ingredient-list">
-    <% ingredients.forEach(ingredient => { %>
+    <% ingredient.forEach(ingredient => { %>
     <div>
     <p><%= ingredient.name %>.</p>
     <form action="/ingredients/<%= ingredient._id %>?_method=DELETE" method="POST">

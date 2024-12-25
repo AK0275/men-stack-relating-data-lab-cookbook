@@ -5,28 +5,29 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 </head>
-<body>
-    <%- include('./partials/_navbar') %>
-    <h1>My Recipe</h1>
-    <a href="/recipes/new.ejs">Add New Recipe</a>
 
-<% if(recipes.length > 0) { %>
-    <ul>
-        <% recipes.forEach(Recipe => { %>
+<body>
+    <%- include('../partials/_navbar') %>
+    <h1>My Recipes</h1>
+    <a href="/recipes/new">Add a  New Recipe: </a>
+
+    <% if (recipe.length > 0) { %>
+    <ol>
+    <% recipe.forEach(recipe => { %>
     <li>
         <a href="/recipes/<%= recipe._id %>" class="recipe-link">
         <%= recipe.name %> (<%= recipe.ingredients.length %> ingredients)
-    </a>
+        </a>
         <form action="/recipes/<%= recipe._id %>?_method=DELETE" method="POST">
         <button type="submit">Delete</button>
+        </form>
     </li>
     <% }) %>
-    </ul>
+    </ol>
     <% } else { %>
     <p>
-        None <a href="/recipes/new.ejs">Add one</a>
+    None <a href="/recipes/new">Add one</a>!
     </p>
     <% } %>
-
 </body>
 </html>

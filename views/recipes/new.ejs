@@ -6,7 +6,7 @@
     <title>Document</title>
 </head>
 <body>
-    <%- include('./partials/_navbar') %>
+    <%- include('../partials/_navbar') %>
     <h1>Create New Recipe</h1>
     <form action="/recipes" method="POST">
     <label for="name">Recipe Name</label>
@@ -17,7 +17,7 @@
     <h2>Ingredients</h2>
     <div>
     <ol>
-    <% ingredients.forEach(ingredient => { %>
+    <% ingredient.forEach(ingredient => { %>
     <li>
         <label>
         <input type="checkbox" name="ingredients" value="<%= ingredient._id %>" /><%= ingredient.name %>
